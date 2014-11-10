@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery Slider</title>
+	<link rel="stylesheet" href="./css/slider.css">
+	<style>
+
+		body {
+			font-family: "Segoe UI", Arial, sans-serif;
+			font-size: 16px;
+			overflow-y: scroll;
+			margin: 0;
+		}
+		.tut
+		{
+			max-width: 700px;
+			margin: 10px auto;
+		}
+		p
+		{
+			margin: 0 0 15px;
+		}
+		pre
+		{
+			font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+			font-size: 12px;
+			line-height: 1.5;
+
+			overflow: hidden;
+
+			padding: 10px;
+
+			word-break: break-all;
+			word-wrap: break-word;
+
+			color: #fff;
+			background-color: #333;
+			border: 1px solid rgba(0,0,0,.1);
+		}
+		code {
+			font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+			padding: 2px 4px;
+			font-size: 90%;
+			color: #c7254e;
+			background-color: #f9f2f4;
+			border-radius: 4px;
+		}
+		.text-center {
+			text-align: center;
+			margin: 20px 0 10px;
+		}
+	</style>
+</head>
+<body>
+
+
+<div class="slider-container" id="slider-container">
+	<div class="slider">
+		<div>
+			<!-- <img src="http://placehold.it/700x400&text=1" alt=""> -->
+			<img src="images/1.jpg" alt="">
+			<span class="caption">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, illo.<a href="">link</a> </span>
+		</div>
+		<div>
+			<img src="images/2.jpg" alt="">
+			<span class="caption">2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, facilis.</span>
+		</div>
+		<div>
+			<img src="images/3.jpg" alt="">
+			<span class="caption">3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, culpa!</span>
+		</div>
+	</div>
+
+	<a href="" class="switch" id="prev"><span></span></a>
+	<a href="" class="switch" id="next"><span></span></a>
+</div>
+
+<div class="tut" class>
+	<p>Слайдер адаптивен - это позволяет подстраиваться под любые размеры мониторов. Контейнер слайдера имеет 100% ширину и полностью занимает всю доступную область родительского блока. Высота контейнера слайдера подстраивается автоматически. Ширину контейнера слайдера и другие стили слайдера можно легко изменить в файле стилей slider.css</p>
+	<p>Стили</p>
+	<pre>&lt;link rel="stylesheet" href="slider.css"&gt;</pre>
+	<p>HTML разметка</p>
+	<pre>&lt;div class=&quot;slider-container&quot;&gt;
+  &lt;div class=&quot;slider&quot;&gt;
+    &lt;div&gt;
+      &lt;img src=&quot;img-1.jpg&quot; alt=&quot;&quot;&gt;
+      &lt;span class=&quot;caption&quot;&gt;&lt;strong&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit.&lt;a href=&quot;&quot;&gt;Далее &gt;&gt;&lt;/a&gt; &lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;img src=&quot;img-2.jpg&quot; alt=&quot;&quot;&gt;
+      &lt;span class=&quot;caption&quot;&gt;2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, facilis.&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;img src=&quot;img-3.jpg&quot; alt=&quot;&quot;&gt;
+      &lt;span class=&quot;caption&quot;&gt;3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, culpa!&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+    &lt;a href=&quot;&quot; class=&quot;switch&quot; id=&quot;prev&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/a&gt;
+    &lt;a href=&quot;&quot; class=&quot;switch&quot; id=&quot;next&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;</pre>
+	<p>Подключение</p>
+		<pre>&lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="slider.js"&gt;&lt;/script&gt;</pre>
+
+	<p>1. Поключение без параметров</p>
+	<pre>&lt;script&gt;
+	$(".slider-container").sliderUi();
+&lt;/script&gt;
+</pre>
+	<p>2. Расширенные настройки</p>
+	<p>По умолчанию плагин использует анимацию css3 <small>(рекомендуется)</small>.</p>
+	<pre>&lt;script&gt;
+	$(".slider-container").sliderUi({
+		speed: 500,
+		cssEasing: "ease-in-out" //описание easing для css анимации
+	});
+&lt;/script&gt;
+</pre>
+<p>Чтобы использовать js анимацию, в параметрах необходимо отключить опцию <code>cssAnimate</code></p>
+<pre>&lt;script&gt;
+	$(".slider-container").sliderUi({
+		cssAnimate: false,
+		jsEasing: "linear" //не обязательно
+	})
+&lt;/script&gt;</pre>
+<div class="slider-container" id="js-animate-slide">
+	<div class="slider">
+		<div>
+			<!-- <img src="http://placehold.it/700x400&text=1" alt=""> -->
+			<img src="images/1.jpg" alt="">
+			<span class="caption">JS анимация.</span>
+		</div>
+		<div>
+			<img src="images/2.jpg" alt="">
+			<span class="caption">JS анимация.</span>
+		</div>
+		<div>
+			<img src="images/3.jpg" alt="">
+			<span class="caption">JS анимация.</span>
+		</div>
+	</div>
+
+	<a href="" class="switch" id="prev"><span></span></a>
+	<a href="" class="switch" id="next"><span></span></a>
+</div>
+
+<h3>Параметры</h3>
+<p>Список всех доступных опций и их значения по умолчанию</p>
+<pre>
+controlShow: true, // показывать навигацию внизу
+arrowsShow:  true, // показывать вперед|назад навигацию
+autoPlay:    true, // автоматическое перелистывание изображений
+delay:       3000, // задержка перед перелистыванием
+caption:     true, // показывать описание
+speed:       500, // скорость анимации
+cssAnimate:  true // анимации с помощью CSS(рекомендуется)
+cssEasing:   "ease-out" // функция плавности анимации с помощью CSS
+jsEasing:    "linear" // функция плавности анимации с помощью JS
+</pre>
+</div>
+
+<div class="text-center">Made with love ( . Y . )</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="./js/vendor/jquery-1.11.1.min.js"><\/script>')</script>
+<script src="./js/slider.js"></script>
+<script>
+	$("#slider-container").sliderUi({
+		speed: 700,
+		cssEasing: "cubic-bezier(0.285, 1.015, 0.165, 1.000)"
+	});
+	$("#js-animate-slide").sliderUi({
+		cssAnimate: false,
+		caption: true,
+		jsEasing: "linear"
+	});
+</script>
+</body>
+</html>
