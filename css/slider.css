@@ -22,7 +22,6 @@
   position: relative;
 
   width: 9999px;
-  /*width: inherit;*/
 }
 .slider:before,
 .slider:after {
