@@ -74,10 +74,17 @@
   margin-top: -20px;
   padding: 10px 15px;
 
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+
   border-radius: 5px;
   background: rgba(0, 0, 0, .39);
 
   filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#99000000', endColorstr='#99000000'); /* ie8 */
+       -o-user-select: none;
 }
 #prev {
   left: 10px;
