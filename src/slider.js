@@ -1,3 +1,4 @@
+/* jQuery simple slider */
 (function($) {
 
 "use strict";
