@@ -1,7 +1,3 @@
-/*
- * $(".slider-container").sliderUi();
- * Author ivan.kuzmichov@gmail.com
- */
 (function($) {
 
 "use strict";
