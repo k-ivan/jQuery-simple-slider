@@ -99,7 +99,7 @@ $.fn.sliderUi = function(o) {
 			var links = [];
 			for(var i = 0; imgLen > i; i++) {
 				var act = (current === i) ? "active" : "";
-					links.push("<a href='#' class='"+act+"' data-id='"+i+"'></a>");
+					links.push("<a class='"+act+"' data-id='"+i+"'></a>");
 			}
 			controlPanel.get(0).innerHTML = links.join("");
 
