@@ -2,6 +2,39 @@
 
 "use strict";
 
+var
+supportCss3 = function( value ) {
+	var el = document.createElement('div');
+	switch(value) {
+		case "transform":
+			var prefix = {
+				transform       : "transform",
+				webkitTransform : "-webkit-transform",
+				mozTransform    : "-moz-transform",
+				msTransform     : "-ms-transform",
+				oTransform      : "-0-transform"
+			}
+		break;
+		case "transition":
+			var prefix = {
+				transition       : 'transition',
+				webkitTransition : 'webkitTransition',
+				mozTransition    : 'mozTransition',
+				oTransition      : 'oTransition'
+			}
+		break;
+	}
+	for(var name in prefix) {
+		if(el.style[name] !== undefined) {
+			return prefix[name];
+		}
+	}
+	return false;
+},
+transform  = supportCss3("transform"),
+transition = supportCss3("transition");
+
+
 $.fn.sliderUi = function(o) {
 	o = $.extend({
 		autoPlay: true,
@@ -10,8 +43,6 @@ $.fn.sliderUi = function(o) {
 		arrowsShow: true,
 		caption: false,
 		speed: 300,
-		jsEasing: "swing",
-		cssAnimate: true,
 		cssEasing: "ease-out"
 	}, o || {});
 
@@ -23,7 +54,7 @@ $.fn.sliderUi = function(o) {
 			caption      = slider.find(".caption"),
 			img          = slider.find("img"),
 			imgLen       = img.length,
-			imgWidth     = container.width(),
+			imgWidth     = container.outerWidth(true),
 			sliderWidth  = imgLen * imgWidth,
 			controlPanel = null,
 			current      = 0,
@@ -36,16 +67,23 @@ $.fn.sliderUi = function(o) {
 		slider.show();
 
 		$(window).on("resize", function() {
-			if(o.cssAnimate) {
-				slider.css("transition", "none")
+			if(transition) {
+				slider.css(transition, "none");
 			}
 			imgWidth     = container.width();
 			sliderWidth  = imgLen * imgWidth;
 			img.width( imgWidth );
-			slider.css({
-				width: sliderWidth + "px",
-				marginLeft: -(imgWidth*current) + "px"
-			});
+			if(transition && transform) {
+				slider.css({
+					width: sliderWidth + "px",
+					transform: "translateX("+ -(imgWidth*current) + "px)"
+				});
+			} else {
+				slider.css({
+					width: sliderWidth + "px",
+					"margin-left": -(imgWidth*current) + "px"
+				});
+			}
 		})
 
 		!o.caption && caption.remove();
@@ -101,19 +139,18 @@ $.fn.sliderUi = function(o) {
 				navControl.eq(current).addClass("active");
 			}
 
-			if(!o.cssAnimate) {
-				busy = true;
-				slider.animate({"margin-left": offset}, o.speed, o.easing, function() {
-					busy = false;
+			if(transition && transform) {
+				slider.css({
+					transition: transform + " " + o.speed + "ms " + o.cssEasing,
+					transform: "translateX(" + offset + ")"
 				})
 			}
 			else {
-				slider.css({
-					transition: "margin-left " + o.speed + "ms " + o.cssEasing,
-					marginLeft: offset
+				busy = true;
+				slider.animate({"margin-left": offset}, o.speed, "linear", function() {
+					busy = false;
 				})
 			}
-
 		}
 
 		if(o.arrowsShow) {
