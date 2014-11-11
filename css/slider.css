@@ -20,8 +20,9 @@
 
 .slider
 {
+    width: 9999px;
     position: relative;
-    width: inherit;
+    /*width: inherit;*/
 }
 .slider:before, .slider:after
 {
@@ -128,6 +129,7 @@
     margin: 0 3px;
 
     -webkit-transition: background .5s ease;
+       -moz-transition: background .5s ease;
          -o-transition: background .5s ease;
             transition: background .5s ease;
 
