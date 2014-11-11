@@ -172,13 +172,15 @@ $.fn.sliderUi = function(o) {
 			}, o.delay);
 		}
 
-		if(o.autoPlay) auto();
-		if(o.autoPlay)
+		if(o.autoPlay) {
+			auto();
 			container.hover(function() {
 				clearInterval(timer);
 			}, function() {
 				auto();
 			});
+		}
+
 	});
 
 }
