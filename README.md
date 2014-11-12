@@ -33,12 +33,13 @@ By default all images have height=auto if necessary can set fixed height
     <a href="" class="switch" id="next"><span></span></a>
 </div>
 ````
+Init plugin
 ````javascript
 <script>
 	$(".slider-container").sliderUi();
 </script>
 ````
-or advanced init
+Init with options
 ````javascript
 <script>
 	$(".slider-container").sliderUi({
