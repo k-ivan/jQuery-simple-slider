@@ -11,6 +11,7 @@ Include the javascript file in your page:
 ````
 ##Example
 HTML layout
+by default all images have height=auto if necessary can set fixed height
 ````html
 <div class="slider-container">
   <div class="slider">
