@@ -51,6 +51,7 @@ $.fn.sliderUi = function(o) {
 		var
 			container    = $(this),
 			slider       = container.find(".slider"),
+			sliderStyle  = slider.get(0).style,
 			arrows       = container.find(".switch"),
 			caption      = slider.find(".caption"),
 			img          = slider.find("img"),
@@ -75,10 +76,8 @@ $.fn.sliderUi = function(o) {
 			sliderWidth  = imgLen * imgWidth;
 			img.width( imgWidth );
 			if(transition && transform) {
-				slider.css({
-					width: sliderWidth + "px",
-					transform: "translateX("+ -(imgWidth*current) + "px)"
-				});
+				sliderStyle.width = sliderWidth + "px";
+				sliderStyle[transform] = "translateX("+ -(imgWidth*current) + "px)";
 			} else {
 				slider.css({
 					width: sliderWidth + "px",
@@ -141,10 +140,8 @@ $.fn.sliderUi = function(o) {
 			}
 
 			if(transition && transform) {
-				slider.css({
-					transition: transform + " " + o.speed + "ms " + o.cssEasing,
-					transform: "translateX(" + offset + ")"
-				})
+				sliderStyle[transition] = transform + " " + o.speed + "ms " + o.cssEasing;
+				sliderStyle[transform] = "translateX(" + offset + ")";
 			}
 			else {
 				busy = true;
