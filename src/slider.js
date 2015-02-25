@@ -13,7 +13,7 @@ supportCss3 = function( value ) {
 				webkitTransform : "-webkit-transform",
 				mozTransform    : "-moz-transform",
 				msTransform     : "-ms-transform",
-				oTransform      : "-0-transform"
+				oTransform      : "-o-transform"
 			}
 		break;
 		case "transition":
