@@ -64,19 +64,19 @@ $.fn.sliderUi = function(o) {
 			busy         = false,
 			timer        = null;
 
-		slider.css("width", sliderWidth + "px");
+		sliderStyle["width"] = sliderWidth + "px";
 		img.width( imgWidth );
 		slider.show();
 
 		$(window).on("resize", function() {
 			if(transition) {
-				slider.css(transition, "none");
+				sliderStyle[transition] = "none";
 			}
 			imgWidth     = container.width();
 			sliderWidth  = imgLen * imgWidth;
 			img.width( imgWidth );
 			if(transition && transform) {
-				sliderStyle.width = sliderWidth + "px";
+				sliderStyle["width"] = sliderWidth + "px";
 				sliderStyle[transform] = "translateX("+ -(imgWidth*current) + "px)";
 			} else {
 				slider.css({
