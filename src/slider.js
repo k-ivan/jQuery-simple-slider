@@ -19,9 +19,9 @@ supportCss3 = function( value ) {
 		case "transition":
 			var prefix = {
 				transition       : 'transition',
-				webkitTransition : 'webkitTransition',
-				mozTransition    : 'mozTransition',
-				oTransition      : 'oTransition'
+				webkitTransition : '-webkit-transition',
+				mozTransition    : '-moz-transition',
+				oTransition      : 'o-transition'
 			}
 		break;
 	}
