@@ -32,7 +32,7 @@
 .slider:after {
   clear: both;
 }
-.slider div {
+.slider .slide {
   position: relative;
 
   float: left;
@@ -40,7 +40,7 @@
   margin: 0;
   padding: 0;
 }
-.slider div img {
+.slider .slide img {
   display: block;
 
   max-width: 100%;

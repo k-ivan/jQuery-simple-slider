@@ -16,15 +16,15 @@ By default all images have height=auto(for responsive slider) if necessary can s
 ````html
 <div class="slider-container">
   <div class="slider">
-    <div>
+    <div class="slide">
       <img src="img-1.jpg" alt="">
       <span class="caption"><strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit.<a href="">Далее >></a> </span>
     </div>
-    <div>
+    <div class="slide">
       <img src="img-2.jpg" alt="">
       <span class="caption">2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, facilis.</span>
     </div>
-    <div>
+    <div class="slide">
       <img src="img-3.jpg" alt="">
       <span class="caption">3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, culpa!</span>
     </div>
