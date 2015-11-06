@@ -1,184 +1,221 @@
-/* jQuery simple slider */
-(function($) {
+(function($){
 
-"use strict";
+$.fn.sliderUi = function(options) {
 
-var
-supportCss3 = function( value ) {
-	var el = document.createElement('div');
-	switch(value) {
-		case "transform":
-			var prefix = {
-				transform       : "transform",
-				webkitTransform : "-webkit-transform",
-				mozTransform    : "-moz-transform",
-				msTransform     : "-ms-transform",
-				oTransform      : "-o-transform"
-			}
-		break;
-		case "transition":
-			var prefix = {
-				transition       : 'transition',
-				webkitTransition : '-webkit-transition',
-				mozTransition    : '-moz-transition',
-				oTransition      : 'o-transition'
-			}
-		break;
-	}
-	for(var name in prefix) {
-		if(el.style[name] !== undefined) {
-			return prefix[name];
-		}
-	}
-	return false;
-},
-transform  = supportCss3("transform"),
-transition = supportCss3("transition");
+  var settings = $.extend({
+    autoPlay: true,
+    delay: 3000,
+    resposive: true,
+    controlShow: true,
+    arrowsShow: true,
+    caption: false,
+    speed: 300,
+    cssEasing: 'ease-out'
+  }, options || {});
 
+  function supportCSS3(prop) {
+    var prefix = ['-webkit-', '-moz-', ''];
+    var root = document.documentElement;
+    function camelCase(str) {
+      return str.replace(/\-([a-z])/gi, function(match, $1) {
+        return $1.toUpperCase();
+      })
+    }
+    for (var i = prefix.length - 1; i >= 0; i--) {
+      var css3prop = camelCase(prefix[i] + prop);
+      if(css3prop in root.style) {
+        return css3prop;
+      }
+    }
+    return false;
+  }
 
-$.fn.sliderUi = function(o) {
-	o = $.extend({
-		autoPlay: true,
-		delay: 3000,
-		controlShow: true,
-		arrowsShow: true,
-		caption: false,
-		speed: 300,
-		cssEasing: "ease-out"
-	}, o || {});
+  function transitionEnd() {
+    var transitions = {
+      'transition': 'transitionend',
+      'WebkitTransition': 'webkitTransitionEnd',
+      'MozTransition': 'mozTransitionEnd'
+    }
+    var root = document.documentElement;
+    for(var name in transitions) {
+      if(root.style[name] !== undefined) {
+        return transitions[name];
+      }
+    }
+    return false;
+  }
 
-	return this.each(function() {
-		var
-			container    = $(this),
-			slider       = container.find(".slider"),
-			sliderStyle  = slider.get(0).style,
-			arrows       = container.find(".switch"),
-			caption      = slider.find(".caption"),
-			img          = slider.find("img"),
-			imgLen       = img.length,
-			imgWidth     = container.outerWidth(true),
-			sliderWidth  = imgLen * imgWidth,
-			controlPanel = null,
-			current      = 0,
-			offset       = null,
-			busy         = false,
-			timer        = null;
+  function support3d() {
+    if(! window.getComputedStyle) {
+      return false;
+    }
+    var el = document.createElement('div'),
+        has3d,
+        transform = supportCSS3('transform');
 
-		sliderStyle["width"] = sliderWidth + "px";
-		img.width( imgWidth );
-		slider.show();
+    document.body.insertBefore(el, null);
 
-		$(window).on("resize", function() {
-			if(transition) {
-				sliderStyle[transition] = "none";
-			}
-			imgWidth     = container.width();
-			sliderWidth  = imgLen * imgWidth;
-			img.width( imgWidth );
-			if(transition && transform) {
-				sliderStyle["width"] = sliderWidth + "px";
-				sliderStyle[transform] = "translateX("+ -(imgWidth*current) + "px)";
-			} else {
-				slider.css({
-					width: sliderWidth + "px",
-					"margin-left": -(imgWidth*current) + "px"
-				});
-			}
-		})
+    el.style[transform] = 'translate3d(1px,1px,1px)';
+    has3d = getComputedStyle(el)[transform];
 
-		!o.caption && caption.remove();
+    document.body.removeChild(el);
 
-		if( o.controlShow) {
-			controlPanel = $("<div/>", {
-				"class": "slider-nav"
-			})
-			.appendTo(container);
+    return (has3d !== undefined && has3d.length > 0 && has3d !== "none");
+  }
 
-			// Control links
-			var links = [];
-			for(var i = 0; imgLen > i; i++) {
-				var act = (current === i) ? "active" : "";
-					links.push("<a class='"+act+"' data-id='"+i+"'></a>");
-			}
-			controlPanel.get(0).innerHTML = links.join("");
+  var transformProperty = supportCSS3('transform');
+  var transitionProperty = supportCSS3('transition');
+  var has3d = support3d();
 
-			var navControl = controlPanel.find("a");
-			navControl.on("click", function(e) {
-				e.preventDefault();
-				current = this.getAttribute("data-id");
-				show("current");
-			})
-		}
+  return this.each(function() {
+    var
+      container    = $(this),
+      slider       = container.find('.slider'),
+      sliderStyle  = slider.get(0).style,
+      arrows       = container.find('.switch'),
+      caption      = slider.find('.caption'),
+      slide        = slider.find('.slide'),
+      slideLen     = slide.length,
+      slideWidth   = container.outerWidth(),
+      sliderWidth  = slideLen * slideWidth,
+      controlPanel = null,
+      current      = 0,
+      offset       = null,
+      busy         = false,
+      timer        = null;
 
-		var show = function(side) {
-			if(busy) return;
+    // console.log(1);
+    sliderStyle['width'] = sliderWidth + 'px';
+    slide.css('width', slideWidth);
 
-			if(side === "next") {
-				if(current < imgLen - 1) {
-					offset = - (imgWidth*(++current)) + "px";
-				}
-				else {
-					offset = 0;
-					current  = 0;
-				}
-			}
-			else if(side === "current") {
-				offset = - (imgWidth*current) + "px";
-			}
-			else {
-				if(current > 0) {
-					offset = - (imgWidth*(--current)) + "px";
-				}
-				else {
-					offset = - (imgWidth*(imgLen - 1)) + "px";
-					current  = imgLen -1;
-				}
-			}
-			if(o.controlShow) {
-				navControl.removeClass("active");
-				navControl.eq(current).addClass("active");
-			}
+    if(settings.resposive) {
+      $(window).on('resize', function() {
+        if(transitionProperty) {
+          sliderStyle[transitionProperty] = 'none';
+        }
+        busy = false;
+        slideWidth  = container.outerWidth();
+        sliderWidth = slideLen * slideWidth;
+        slide.css('width', slideWidth);
 
-			if(transition && transform) {
-				sliderStyle[transition] = transform + " " + o.speed + "ms " + o.cssEasing;
-				sliderStyle[transform] = "translateX(" + offset + ")";
-			}
-			else {
-				busy = true;
-				slider.animate({"margin-left": offset}, o.speed, "linear", function() {
-					busy = false;
-				})
-			}
-		}
+        if(transitionProperty && transformProperty) {
+          sliderStyle['width'] = sliderWidth + 'px';
 
-		if(o.arrowsShow) {
-			arrows.on("click", function(e) {
-				e.preventDefault();
-				var side = this.id;
-				show(side);
-			})
-		}
-		else {
-			arrows.remove();
-		}
+          (has3d)
+            ? sliderStyle[transformProperty] = 'translate3d('+ -(slideWidth*current) + 'px, 0, 0)'
+            : sliderStyle[transformProperty] = 'translate('+ -(slideWidth*current) + 'px, 0)';
 
-		var auto = function() {
-			if(timer) clearInterval(timer);
-			timer = setInterval(function() {
-				show("next");
-			}, o.delay);
-		}
+        } else {
+          slider.css({
+            width: sliderWidth + 'px',
+            'margin-left': -(slideWidth*current) + 'px'
+          });
+        }
 
-		if(o.autoPlay) {
-			auto();
-			container.hover(function() {
-				clearInterval(timer);
-			}, function() {
-				auto();
-			});
-		}
+      })
+    }
 
-	});
+    !settings.caption && caption.remove();
+
+    if( settings.controlShow) {
+      controlPanel = $('<div/>', {
+        'class': 'slider-nav'
+      })
+      .appendTo(container);
+
+      // Control links
+      var links = [];
+
+      for(var i = 0; slideLen > i; i++) {
+        var act = (current === i) ? 'active' : '';
+          links.push('<a class="'+ act +'" data-id="'+ i +'"></a>');
+      }
+      controlPanel.get(0).innerHTML = links.join('');
+
+      var navControl = controlPanel.find('a');
+      navControl.on('click', function(e) {
+        e.preventDefault();
+        if($(this).hasClass('active')) return;
+        current = parseInt(this.getAttribute('data-id'), 10);
+        show('current');
+      })
+    }
+
+    var show = function(side) {
+      if(busy) return;
+
+      if(side === 'next') {
+        if(current < slideLen - 1) {
+          offset = - (slideWidth*(++current)) + 'px';
+        }
+        else {
+          offset = 0;
+          current  = 0;
+        }
+      }
+      else if(side === 'current') {
+        offset = - (slideWidth*current) + 'px';
+      }
+      else {
+        if(current > 0) {
+          offset = - (slideWidth*(--current)) + 'px';
+        }
+        else {
+          offset = - (slideWidth*(slideLen - 1)) + 'px';
+          current  = slideLen -1;
+        }
+      }
+      if(settings.controlShow) {
+        navControl.removeClass('active');
+        navControl.eq(current).addClass('active');
+      }
+      busy = true;
+      if(transitionProperty && transformProperty) {
+        sliderStyle[transitionProperty] = transformProperty + ' ' + settings.speed + 'ms ' + settings.cssEasing;
+
+        (has3d)
+          ? sliderStyle[transformProperty] = 'translate3d(' + offset + ', 0, 0)'
+          : sliderStyle[transformProperty] = 'translate(' + offset + ', 0)';
+
+        slider.one(transitionEnd(), function(e) {
+          busy = false;
+        })
+      }
+      else {
+        slider.animate({'margin-left': offset}, settings.speed, 'linear', function() {
+          busy = false;
+        })
+      }
+    }
+
+    if(settings.arrowsShow) {
+      arrows.on('click', function(e) {
+        e.preventDefault();
+        var side = this.id;
+        show(side);
+      })
+    }
+    else {
+      arrows.remove();
+    }
+
+    var auto = function() {
+      if(timer) clearInterval(timer);
+      timer = setInterval(function() {
+        show('next');
+      }, settings.delay);
+    }
+
+    if(settings.autoPlay) {
+      auto();
+      container.hover(function() {
+        clearInterval(timer);
+      }, function() {
+        auto();
+      });
+    }
+
+  });
 
 }
 

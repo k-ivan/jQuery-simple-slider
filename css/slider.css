@@ -102,8 +102,9 @@
   padding: 0 10px 30px;
 
   color: #fff;
-  background: rgba(0, 0, 0, .39);
-
+  background: rgba(0,0,0,.8);
+  background: -webkit-linear-gradient(bottom, rgba(0,0,0, .8), transparent 100%);
+  background: linear-gradient(to top, rgba(0,0,0, .8), transparent 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#99000000', endColorstr='#99000000'); /* ie8 */
 }
 .caption a {
