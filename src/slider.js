@@ -5,7 +5,7 @@ $.fn.sliderUi = function(options) {
   var settings = $.extend({
     autoPlay: true,
     delay: 3000,
-    resposive: true,
+    responsive: true,
     controlShow: true,
     arrowsShow: true,
     caption: false,
@@ -88,7 +88,7 @@ $.fn.sliderUi = function(options) {
     sliderStyle['width'] = sliderWidth + 'px';
     slide.css('width', slideWidth);
 
-    if(settings.resposive) {
+    if(settings.responsive) {
       $(window).on('resize', function() {
         if(transitionProperty) {
           sliderStyle[transitionProperty] = 'none';
