@@ -39,14 +39,22 @@ By default all images have height=auto(for responsive slider) if necessary can s
 ````
 Init plugin
 ````javascript
-	$(".slider-container").ikSlider();
+$(".slider-container").ikSlider();
 ````
 Init with options
 ````javascript
-	$(".slider-container").ikSlider({
-		speed: 700,
-		cssEase: "ease-in-out"
-	});
+$(".slider-container").ikSlider({
+	speed: 700,
+	cssEase: "ease-in-out"
+});
+````
+Show specified slide
+````javascript
+$(".slider-container").ikSlider(3);
+````
+Destroy plugin
+````javascript
+$(".slider-container").ikSlider('destroy');
 ````
 ##Options
 available options and their default values
