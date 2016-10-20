@@ -6,75 +6,48 @@
 	<link rel="stylesheet" href="./css/slider.css">
 	<style>
 		body {
-			font-family: "Segoe UI", Arial, sans-serif;
-			font-size: 16px;
-			margin: 0;
-			overflow-y: scroll;
-		}
-		.container
-		{
-			max-width: 800px;
-			margin: 20px auto;
-		}
-		p
-		{
-			margin: 0 0 15px;
+			max-width: 1024px;
+			width: 100%;
+			margin: 0 auto;
+			padding: 20px;
+			font-size: 14px;
+			font-family: Helvetica, Arial, sans-serif;
 		}
 	</style>
 </head>
 <body>
-
-<div class="slider-container" id="slider-container">
-	<div class="slider">
-		<div class="slide">
-			<img src="images/1.jpg" alt="">
-		</div>
-		<div class="slide">
-			<img src="images/2.jpg" alt="">
-		</div>
-		<div class="slide">
-			<img src="images/3.jpg" alt="">
-		</div>
-	</div>
-
-	<div class="switch" id="prev"><span></span></div>
-	<div class="switch" id="next"><span></span></div>
+<div class="slider-container">
+  <div class="slider">
+    <div class="slider__item">
+      <img src="images/1.jpg" alt="">
+      <span class="slider__caption">Lorem ipsum dolor sit amet, consectetur adipisicing elit.<a href="">Далее >></a> </span>
+    </div>
+    <div class="slider__item">
+      <img src="images/2.jpg" alt="">
+      <span class="slider__caption">2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, facilis.</span>
+    </div>
+    <div class="slider__item">
+      <img src="images/3.jpg" alt="">
+      <span class="slider__caption">3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, culpa!</span>
+    </div>
+  </div>
+    <div class="slider__switch slider__switch--prev" data-ikslider-dir="prev">
+      <span><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 20 20"><path d="M13.89 17.418c.27.272.27.71 0 .98s-.7.27-.968 0l-7.83-7.91c-.268-.27-.268-.706 0-.978l7.83-7.908c.268-.27.7-.27.97 0s.267.71 0 .98L6.75 10l7.14 7.418z"/></svg></span>
+    </div>
+    <div class="slider__switch slider__switch--next" data-ikslider-dir="next">
+      <span><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 20 20"><path d="M13.25 10L6.11 2.58c-.27-.27-.27-.707 0-.98.267-.27.7-.27.968 0l7.83 7.91c.268.27.268.708 0 .978l-7.83 7.908c-.268.27-.7.27-.97 0s-.267-.707 0-.98L13.25 10z"/></svg></span>
+    </div>
 </div>
 
-<div class="container">
-<p>Пример слайдера с описанием</p>
-	<div class="slider-container" id="caption-slide">
-		<div class="slider">
-			<div class="slide">
-				<img src="images/1.jpg" alt="">
-				<span class="caption">Слайдер с описанием</span>
-			</div>
-			<div class="slide">
-				<img src="images/2.jpg" alt="">
-				<span class="caption">Слайдер с описанием</span>
-			</div>
-			<div class="slide">
-				<img src="images/3.jpg" alt="">
-				<span class="caption">Слайдер с описанием</span>
-			</div>
-		</div>
-
-		<div class="switch" id="prev"><span></span></div>
-		<div class="switch" id="next"><span></span></div>
-	</div>
-</div>
+<p><a href="http://codepen.io/collection/DRRYeL/">More examples</a></p>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="./lib/jquery-1.11.1.min.js"><\/script>')</script>
 
 <script src="./src/slider.js"></script>
 <script>
-	$("#slider-container").sliderUi({
+	$(".slider-container").ikSlider({
 		speed: 500,
-		cssEasing: "cubic-bezier(0.285, 1.015, 0.165, 1.000)"
-	});
-	$("#caption-slide").sliderUi({
-		caption: true
 	});
 </script>
 

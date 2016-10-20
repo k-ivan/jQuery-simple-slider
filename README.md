@@ -16,46 +16,50 @@ By default all images have height=auto(for responsive slider) if necessary can s
 ````html
 <div class="slider-container">
   <div class="slider">
-    <div class="slide">
+    <div class="slider__item">
       <img src="img-1.jpg" alt="">
-      <span class="caption"><strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit.<a href="">Далее >></a> </span>
+      <span class="slider__caption">Lorem ipsum dolor sit amet, consectetur adipisicing elit.<a href="">Далее >></a> </span>
     </div>
-    <div class="slide">
+    <div class="slider__item">
       <img src="img-2.jpg" alt="">
-      <span class="caption">2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, facilis.</span>
+      <span class="slider__caption">2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, facilis.</span>
     </div>
-    <div class="slide">
+    <div class="slider__item">
       <img src="img-3.jpg" alt="">
-      <span class="caption">3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, culpa!</span>
+      <span class="slider__caption">3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, culpa!</span>
     </div>
   </div>
-    <a href="" class="switch" id="prev"><span></span></a>
-    <a href="" class="switch" id="next"><span></span></a>
+    <div class="slider__switch slider__switch--prev" data-ikslider-dir="prev">
+      <span></span>
+    </div>
+    <div class="slider__switch slider__switch--next" data-ikslider-dir="next">
+      <span></span>
+    </div>
 </div>
 ````
 Init plugin
 ````javascript
-<script>
-	$(".slider-container").sliderUi();
-</script>
+	$(".slider-container").ikSlider();
 ````
 Init with options
 ````javascript
-<script>
-	$(".slider-container").sliderUi({
+	$(".slider-container").ikSlider({
 		speed: 700,
-		cssEasing: "ease-in-out"
+		cssEase: "ease-in-out"
 	});
-</script>
 ````
 ##Options
 available options and their default values
 ````javascript
+touch   : true,
+controls: true,
+arrows  : true,
+infinite: false,
+delay   : 10000, // 10s
+caption : false,
+speed   : 300,
+cssEase : 'ease-out',
+responsive: true,
 autoPlay: true,
-delay: 3000,
-controlShow: true,
-arrowsShow: true,
-caption: false,
-speed: 300,
-cssEasing: "ease-out"
+pauseOnHover: true
 ````
