@@ -341,11 +341,9 @@
     }
 
     function _dimmensions() {
-
-      var scrollWidth = window.innerWidth - document.documentElement.clientWidth || 0;
-      slideWidth = $container.outerWidth() + scrollWidth;
-
+      slideWidth = $container.outerWidth();
       sliderWidth = slideLen * slideWidth;
+
       $slide.css('width', slideWidth);
       sliderStyle['width'] = sliderWidth + 'px';
     }
