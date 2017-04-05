@@ -294,11 +294,7 @@
       busy = true;
       _move(offset, true);
 
-      // Change event trigger
-      var eventSlide = $.Event('changeSlide.' + PLUGIN, {
-        currentSlide: current
-      });
-      $container.trigger(eventSlide);
+      _triggerChange();
     }
 
     function _move(value, hasAnimate) {
@@ -331,6 +327,14 @@
         }
 
       }
+    }
+
+    // Change event trigger
+    function _triggerChange() {
+      var eventSlide = $.Event('changeSlide.' + PLUGIN, {
+        currentSlide: current
+      });
+      $container.trigger(eventSlide);
     }
 
     function _autoPlay() {
