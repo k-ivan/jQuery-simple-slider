@@ -1,6 +1,6 @@
-#Jquery Simple Slider
+# Jquery Simple Slider
 
-##How to use
+## How to use
 Include jQuery library in your page:
 ````html
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -9,7 +9,7 @@ Include the javascript file in your page:
 ````html
 <script src="./src/slider.js"></script>
 ````
-##Example
+## Example
 HTML layout
 
 By default all images have height=auto(for responsive slider) if necessary can set fixed height
@@ -56,7 +56,7 @@ Destroy plugin
 ````javascript
 $(".slider-container").ikSlider('destroy');
 ````
-##Options
+## Options
 available options and their default values
 ````javascript
 touch   : true,
