@@ -293,6 +293,12 @@
       }
       busy = true;
       _move(offset, true);
+
+      // Change event trigger
+      var eventSlide = $.Event('changeSlide.' + PLUGIN, {
+        currentSlide: current
+      });
+      $container.trigger(eventSlide);
     }
 
     function _move(value, hasAnimate) {
@@ -438,7 +444,7 @@
       }
       if (typeof opt === 'string' || typeof opt === 'number' && opt !== 'init') {
         if (typeof opt === 'number') {
-          _this = slider.show(opt - 1);
+          _this = slider.show(opt);
         } else {
           if(slider[opt]) {
             _this = slider[opt]();
