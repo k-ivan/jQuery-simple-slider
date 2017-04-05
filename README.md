@@ -71,3 +71,13 @@ responsive: true,
 autoPlay: true,
 pauseOnHover: true
 ````
+## Event
+ikSlider represents one event for additional functionality.
+
+Event `slideChange.ikSlider` - event fired everytime when changing slides. Event have the following additional property `currentSlide` (index of the current slide).
+
+````javascript
+$('#slider').on('changeSlide.ikSlider', function(e) {
+  // console.log(e.currentSlide) ...
+});
+````
