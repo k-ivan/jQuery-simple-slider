@@ -366,7 +366,7 @@
       offset = -(slideWidth * current);
       _move(offset);
 
-      _autoPlay();
+      settings.autoPlay && _autoPlay();
     }
 
     function destroy() {
